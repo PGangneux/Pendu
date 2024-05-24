@@ -10,13 +10,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.scene.control.Tooltip;
-import javafx.scene.control.TitledPane;
-import javafx.scene.layout.Region;
 import javafx.scene.text.TextAlignment;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar.ButtonData ;
-import javafx.scene.control.ButtonType ;
+
 import java.util.List;
 import java.util.Arrays;
 import java.io.File;
@@ -98,6 +94,7 @@ public class Pendu extends Application {
      */
     private Scene laScene(){
         BorderPane fenetre = new BorderPane();
+        this.panelCentral = new BorderPane();
         fenetre.setTop(this.titre());
         fenetre.setCenter(this.panelCentral);
         return new Scene(fenetre, 800, 1000);
@@ -107,8 +104,35 @@ public class Pendu extends Application {
      * @return le panel contenant le titre du jeu
      */
     private Pane titre(){
-        // A implementer          
-        Pane banniere = new Pane();
+        
+        //Partie haute de l'accueil
+        BorderPane banniere = new BorderPane();
+        Label  titre = new Label("Jeu du Pendu");
+        //Les images des boutons 
+        Image imgHome = new Image("file:img/home.png", 100, 100, false, false);
+        ImageView viewHome = new ImageView(imgHome);
+        Image imgParam = new Image("file:img/parametres.png", 100, 100, false, false);
+        ImageView viewParam = new ImageView(imgParam);
+        Image imgInfo = new Image("file:img/info.png", 100, 100, false, false);
+        ImageView viewInfo = new ImageView(imgInfo);
+
+        this.boutonMaison = new Button();
+        this.boutonMaison.setGraphic(viewHome);
+
+        this.boutonParametres = new Button();
+        this.boutonParametres.setGraphic(viewParam);
+
+        Button info = new Button();
+        info.setGraphic(viewInfo);
+        
+        HBox lesBoutons = new HBox();
+
+        lesBoutons.getChildren().addAll(this.boutonMaison, this.boutonParametres, info);
+
+        banniere.setLeft(titre);
+        banniere.setRight(lesBoutons);
+       
+
         return banniere;
     }
 
@@ -153,7 +177,9 @@ public class Pendu extends Application {
     }
 
     public void modeAccueil(){
-        // A implementer
+        
+        this.bJouer = new Button("Lancer une partie");
+        this.panelCentral.setCenter(bJouer);
     }
     
     public void modeJeu(){
