@@ -160,15 +160,21 @@ public class Pendu extends Application {
     
     public void modeJeu(){
         VBox center = new VBox();
-        this.motCrypte = new Text("");
+        this.motCrypte = new Text(this.modelePendu.getMotCrypte());
         this.dessin = new ImageView(new Image("file:img/pendu0.png"));
         this.pg = new ProgressBar();
         TilePane boutontTilePane = new TilePane();
+        ControleurLettres controleurLettres = new ControleurLettres(this.modelePendu, this);
         for (int i = 0; i<26; ++i){
             String lettre = Character.toString((char)65 + i);
-            boutontTilePane.getChildren().add(new Button(lettre));
+            Button boutonLettre = new Button(lettre);
+            boutonLettre.setOnAction(controleurLettres);
+            boutontTilePane.getChildren().add(boutonLettre);
         }
-        boutontTilePane.getChildren().add(new Button("-"));
+        Button boutonLettre = new Button("-");
+        boutonLettre.setOnAction(controleurLettres);
+        boutontTilePane.getChildren().add(boutonLettre);
+        
         center.getChildren().addAll(this.motCrypte,this.dessin,this.pg,boutontTilePane);
         this.panelCentral.setCenter(center);
         
