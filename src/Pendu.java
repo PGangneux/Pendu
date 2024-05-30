@@ -85,6 +85,7 @@ public class Pendu extends Application {
      * le bouton qui permet de (lancer ou relancer une partie
      */ 
     private Button bJouer;
+    public ImageView imgHome;
 
     /**
      * initialise les attributs (créer le modèle, charge les images, crée le chrono ...)
@@ -106,16 +107,25 @@ public class Pendu extends Application {
         Image imgInfo = new Image("file:img/info.png", 50, 50, false, true);
         ImageView viewInfo = new ImageView(imgInfo);
 
+        ControleurInfos controlInfos = new ControleurInfos(this);
+        RetourAccueil controlAccueil = new RetourAccueil(this.modelePendu, this);
+        ControleurParametre controlParam = new ControleurParametre(this, this.modelePendu);
+        ControleurLancerPartie controlLancer = new ControleurLancerPartie(this.modelePendu, this);
+
         this.boutonMaison = new Button();
         this.boutonMaison.setGraphic(viewHome);
+        this.boutonMaison.setOnAction(controlAccueil);
 
         this.boutonParametres = new Button();
         this.boutonParametres.setGraphic(viewParam);
+        this.boutonParametres.setOnAction(controlParam);
 
         this.boutonInfo = new Button();
         boutonInfo.setGraphic(viewInfo);
+        this.boutonInfo.setOnAction(controlInfos);
 
         this.bJouer = new Button("Lancer une partie");
+        this.bJouer.setOnAction(controlLancer);
         
         this.niveaux = Arrays.asList("Facile", "Médium", "Difficile", "Expert");
     }
