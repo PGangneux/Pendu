@@ -243,7 +243,6 @@ public class Pendu extends Application {
     @Override
     public void start(Stage stage) {
         stage.setTitle("IUTEAM'S - La plateforme de jeux de l'IUTO");
-        stage.setScene(this.laScene());
         this.modeAccueil();
         stage.setScene(this.laScene());
     }
