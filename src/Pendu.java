@@ -245,6 +245,7 @@ public class Pendu extends Application {
         stage.setTitle("IUTEAM'S - La plateforme de jeux de l'IUTO");
         this.modeAccueil();
         stage.setScene(this.laScene());
+        stage.show();
     }
 
     /**
