@@ -174,7 +174,7 @@ public class Pendu extends Application {
         Button boutonLettre = new Button("-");
         boutonLettre.setOnAction(controleurLettres);
         boutontTilePane.getChildren().add(boutonLettre);
-        
+
         center.getChildren().addAll(this.motCrypte,this.dessin,this.pg,boutontTilePane);
         this.panelCentral.setCenter(center);
         
@@ -244,8 +244,8 @@ public class Pendu extends Application {
     public void start(Stage stage) {
         stage.setTitle("IUTEAM'S - La plateforme de jeux de l'IUTO");
         stage.setScene(this.laScene());
-        this.modeJeu();
-        stage.show();
+        this.modeAccueil();
+        stage.setScene(this.laScene());
     }
 
     /**

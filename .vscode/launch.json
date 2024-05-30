@@ -6,6 +6,14 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Pendu",
+            "request": "launch",
+            "vmArgs": "--module-path /usr/share/openjfx/lib/ --add-modules javafx.controls,javafx.fxml",
+            "mainClass": "Pendu",
+            "projectName": "Pendu_cb1d294a"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "vmArgs": "--module-path /usr/share/openjfx/lib/ --add-modules javafx.controls,javafx.fxml",
@@ -17,7 +25,7 @@
             "request": "launch",
             "vmArgs": "--module-path /usr/share/openjfx/lib/ --add-modules javafx.controls,javafx.fxml",
             "mainClass": "Pendu",
-            "projectName": "Pendu_24f3ffbe"
+            "projectName": "Pendu_5e76dbc3"
         }
     ]
 }
