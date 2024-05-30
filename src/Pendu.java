@@ -15,6 +15,9 @@ import javafx.scene.text.TextAlignment;
 import javafx.scene.control.ButtonBar.ButtonData ;
 
 import java.util.List;
+
+import javax.sql.rowset.serial.SerialRef;
+
 import java.util.Arrays;
 import java.io.File;
 import java.util.ArrayList;
@@ -91,6 +94,8 @@ public class Pendu extends Application {
         this.modelePendu = new MotMystere("/usr/share/dict/french", 3, 10, MotMystere.FACILE, 10);
         this.lesImages = new ArrayList<Image>();
         this.chargerImages("./img");
+        
+
         // A terminer d'implementer
 
         // Les boutons 
@@ -121,6 +126,7 @@ public class Pendu extends Application {
     private Scene laScene(){
         BorderPane fenetre = new BorderPane();
         fenetre.setTop(this.titre());
+        this.panelCentral  = new BorderPane();
         fenetre.setCenter(this.panelCentral);
         return new Scene(fenetre, 800, 1000);
     }
@@ -226,7 +232,32 @@ public class Pendu extends Application {
     }
     
     public void modeJeu(){
-        // A implementer
+        VBox center = new VBox();
+        this.motCrypte = new Text(this.modelePendu.getMotCrypte());
+        this.dessin = new ImageView(new Image("file:img/pendu0.png"));
+        this.pg = new ProgressBar();
+        TilePane boutontTilePane = new TilePane();
+        ControleurLettres controleurLettres = new ControleurLettres(this.modelePendu, this);
+        for (int i = 0; i<26; ++i){
+            String lettre = Character.toString((char)65 + i);
+            Button boutonLettre = new Button(lettre);
+            boutonLettre.setOnAction(controleurLettres);
+            boutontTilePane.getChildren().add(boutonLettre);
+        }
+        Button boutonLettre = new Button("-");
+        boutonLettre.setOnAction(controleurLettres);
+        boutontTilePane.getChildren().add(boutonLettre);
+
+        center.getChildren().addAll(this.motCrypte,this.dessin,this.pg,boutontTilePane);
+        this.panelCentral.setCenter(center);
+        
+        VBox right = new VBox();
+        Label niveau = new Label("niveau " + this.leNiveau);
+        TilePane tilePaneTimer = new TilePane();
+        Button newMot = new Button("Nouveau mot");
+        right.getChildren().addAll(niveau, tilePaneTimer,newMot);
+        this.panelCentral.setRight(right);
+
     }
     
     public void modeParametres(){
