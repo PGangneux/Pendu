@@ -272,7 +272,7 @@ public class Pendu extends Application {
         
     public Alert popUpReglesDuJeu(){
         
-        Alert alert = new Alert(Alert.AlertType.INFORMATION,"La partie est en cours!\n Etes-vous sûr de l'interrompre ?");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,"Le but du jeu est simple : deviner toute les lettres qui doivent composer un mot.\n Éventuellement avec un nombre limité de tentatives et des thèmes fixés à l'avance.\n A chaque fois que le joueur devine une lettre, celle-ci est affichée.\n Dans le cas contraire, le dessin d'un pendu se met à apparaître…");
         return alert;
     }
     
