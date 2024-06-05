@@ -271,8 +271,8 @@ public class Pendu extends Application {
     }
         
     public Alert popUpReglesDuJeu(){
-        // A implementer
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,"La partie est en cours!\n Etes-vous sûr de l'interrompre ?");
         return alert;
     }
     
