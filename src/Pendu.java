@@ -136,7 +136,6 @@ public class Pendu extends Application {
     private Scene laScene(){
         BorderPane fenetre = new BorderPane();
         fenetre.setTop(this.titre());
-        this.panelCentral  = new BorderPane();
         fenetre.setCenter(this.panelCentral);
         return new Scene(fenetre, 800, 1000);
     }
@@ -264,8 +263,10 @@ public class Pendu extends Application {
         VBox right = new VBox();
         Label niveau = new Label("niveau " + this.leNiveau);
         TilePane tilePaneTimer = new TilePane();
-        Button newMot = new Button("Nouveau mot");
-        right.getChildren().addAll(niveau, tilePaneTimer,newMot);
+        this.bJouer = new Button("Nouveau mot");
+        ControleurLancerPartie controlLancer = new ControleurLancerPartie(this.modelePendu, this);
+        this.bJouer.setOnAction(controlLancer);
+        right.getChildren().addAll(niveau, tilePaneTimer,this.bJouer);
         this.panelCentral.setRight(right);
 
     }
@@ -276,7 +277,7 @@ public class Pendu extends Application {
 
     /** lance une partie */
     public void lancePartie(){
-        // A implementer
+        this.modeJeu();
     }
 
     /**
