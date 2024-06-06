@@ -32,7 +32,14 @@ public class Clavier extends TilePane{
         Button boutton = new Button(touches);
         boutton.setOnAction(this.actionTouches);
         this.clavier.add(boutton);
+    
 
+    }
+
+
+
+    public List<Button> getClavier() {
+        return clavier;
     }
 
     public void ajouterTouche(String touches){
@@ -40,6 +47,11 @@ public class Clavier extends TilePane{
         boutton.setOnAction(this.actionTouches);
         this.clavier.add(boutton);
     }
+
+   
+    
+
+   
 
     /**
      * permet de désactiver certaines touches du clavier (et active les autres)
