@@ -107,6 +107,8 @@ public class Pendu extends Application {
         ControleurParametre controlParam = new ControleurParametre(this, this.modelePendu);
         ControleurLancerPartie controlLancer = new ControleurLancerPartie(this.modelePendu, this);
 
+        this.panelCentral = new BorderPane();
+
         this.boutonMaison = new Button();
         this.boutonMaison.setGraphic(viewHome);
         this.boutonMaison.setOnAction(controlAccueil);
@@ -185,10 +187,7 @@ public class Pendu extends Application {
     /**
      * @return la fenêtre d'accueil sur laquelle on peut choisir les paramètres de jeu
      */
-    private BorderPane fenetreAccueil(){
-        BorderPane accueil = new BorderPane();
-        
-   
+    private void fenetreAccueil(){
 
         VBox lesDifficultes = new VBox();
         VBox positionnement = new VBox();
@@ -203,19 +202,20 @@ public class Pendu extends Application {
                 r.setSelected(true);
                 difficulteParDefaut = true;
             }
-
         
         }
-
         lesDifficultes.setSpacing(5);
         TitledPane difficulte = new TitledPane("Niveau de difficulté", lesDifficultes);
         
         positionnement.getChildren().addAll(this.bJouer, difficulte);
         positionnement.setSpacing(10);
-        accueil.setCenter(positionnement);
-        accueil.setPadding(new Insets(15));
+        this.panelCentral.setCenter(positionnement);
+        this.panelCentral.setPadding(new Insets(15));
+    }
 
-        return accueil;
+    private void fenetreParam(){
+        this.panelCentral.setCenter(new BorderPane()); 
+
     }
 
     /**
@@ -231,8 +231,7 @@ public class Pendu extends Application {
     }
 
     public void modeAccueil(){
-        this.panelCentral = fenetreAccueil();
-        
+        this.fenetreAccueil();
     }
     
     public void modeJeu(){
@@ -240,7 +239,7 @@ public class Pendu extends Application {
     }
     
     public void modeParametres(){
-        // A implémenter
+        this.fenetreParam();  
     }
 
     /** lance une partie */
@@ -272,7 +271,7 @@ public class Pendu extends Application {
         
     public Alert popUpReglesDuJeu(){
         
-        Alert alert = new Alert(Alert.AlertType.INFORMATION,"Le but du jeu est simple : deviner toute les lettres qui doivent composer un mot.\n Éventuellement avec un nombre limité de tentatives et des thèmes fixés à l'avance.\n A chaque fois que le joueur devine une lettre, celle-ci est affichée.\n Dans le cas contraire, le dessin d'un pendu se met à apparaître…");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,"Le but du jeu est simple : deviner toute les lettres qui doivent composer un mot.\nÉventuellement avec un nombre limité de tentatives et des thèmes fixés à l'avance.\n A chaque fois que le joueur devine une lettre, celle-ci est affichée.\n Dans le cas contraire, le dessin d'un pendu se met à apparaître…");
         return alert;
     }
     

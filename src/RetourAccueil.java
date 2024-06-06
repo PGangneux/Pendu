@@ -33,5 +33,6 @@ public class RetourAccueil implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         // A implémenter
+        this.vuePendu.modeAccueil();
     }
 }
