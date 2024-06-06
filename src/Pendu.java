@@ -196,7 +196,9 @@ public class Pendu extends Application {
 
         VBox lesDifficultes = new VBox();
         VBox positionnement = new VBox();
+        VBox droite = new VBox();
 
+        this.panelCentral.setRight(droite);
         ToggleGroup groupe = new ToggleGroup();
         boolean difficulteParDefaut = false;
         for (String unNiveau : this.niveaux){
