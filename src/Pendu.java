@@ -90,6 +90,10 @@ public class Pendu extends Application {
     /**
      * initialise les attributs (créer le modèle, charge les images, crée le chrono ...)
      */
+    public Clavier getClavier() {
+        return this.clavier;
+    }
+     
     @Override
     public void init() {
         this.modelePendu = new MotMystere("/usr/share/dict/french", 3, 10, MotMystere.FACILE, 10);
@@ -131,6 +135,8 @@ public class Pendu extends Application {
         
         this.niveaux = Arrays.asList("Facile", "Médium", "Difficile", "Expert");
     }
+
+    
 
     /**
      * @return  le graphe de scène de la vue à partir de methodes précédantes
@@ -247,17 +253,19 @@ public class Pendu extends Application {
         this.dessin = new ImageView(new Image("file:img/pendu0.png"));
         this.pg = new ProgressBar();
         TilePane boutontTilePane = new TilePane();
+        
+        
         ControleurLettres controleurLettres = new ControleurLettres(this.modelePendu, this);
-        for (int i = 0; i<26; ++i){
+        this.clavier = new Clavier(Character.toString((char)65), controleurLettres);
+        for (int i = 1; i<26; ++i){
             String lettre = Character.toString((char)65 + i);
-            Button boutonLettre = new Button(lettre);
-            boutonLettre.setOnAction(controleurLettres);
-            boutontTilePane.getChildren().add(boutonLettre);
+            this.clavier.ajouterTouche(lettre);
+            
         }
-        Button boutonLettre = new Button("-");
-        boutonLettre.setOnAction(controleurLettres);
-        boutontTilePane.getChildren().add(boutonLettre);
-
+        this.clavier.ajouterTouche("-");
+        for(Button button : this.clavier.getClavier()){
+            boutontTilePane.getChildren().add(button);
+        }
         center.getChildren().addAll(this.motCrypte,this.dessin,this.pg,boutontTilePane);
         this.panelCentral.setCenter(center);
         
@@ -285,7 +293,15 @@ public class Pendu extends Application {
      * raffraichit l'affichage selon les données du modèle
      */
     public void majAffichage(){
-        // A implementer
+        this.motCrypte = new Text(this.modelePendu.getMotCrypte());
+        VBox center =(VBox) this.panelCentral.getCenter();
+        center.getChildren().set(0, this.motCrypte);
+        if(this.motCrypte.equals(this.motCrypte.getText())){
+            
+        }
+        
+        
+        
     }
 
     /**

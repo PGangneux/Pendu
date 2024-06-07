@@ -18,6 +18,7 @@ public class Clavier extends TilePane{
      * il est conseillé de stocker les touches dans un ArrayList
      */
     private List<Button> clavier;
+    private EventHandler<ActionEvent> actionTouches;
 
     /**
      * constructeur du clavier
@@ -26,8 +27,31 @@ public class Clavier extends TilePane{
      * @param tailleLigne nombre de touches par ligne
      */
     public Clavier(String touches, EventHandler<ActionEvent> actionTouches) {
-        // A implémenter
+        this.clavier = new ArrayList<>();
+        this.actionTouches = actionTouches;
+        Button boutton = new Button(touches);
+        boutton.setOnAction(this.actionTouches);
+        this.clavier.add(boutton);
+    
+
     }
+
+
+
+    public List<Button> getClavier() {
+        return clavier;
+    }
+
+    public void ajouterTouche(String touches){
+        Button boutton = new Button(touches);
+        boutton.setOnAction(this.actionTouches);
+        this.clavier.add(boutton);
+    }
+
+   
+    
+
+   
 
     /**
      * permet de désactiver certaines touches du clavier (et active les autres)
