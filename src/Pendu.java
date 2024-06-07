@@ -327,7 +327,6 @@ public class Pendu extends Application {
         if(this.erreursRestantes != this.modelePendu.getNbErreursRestants()){
             
             this.erreursRestantes = this.modelePendu.getNbErreursRestants();
-            System.out.println("local2 "+this.erreursRestantes);
             this.dessin.setImage(this.lesImages.get(this.numImg));
             center.getChildren().set(1,this.dessin);
             this.numImg +=frequnce;
