@@ -326,8 +326,14 @@ public class Pendu extends Application {
         return null; // A enlever
     }
 
+    public Alert popUpPremierePartie(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Souhaitez vous jouer ?", ButtonType.YES, ButtonType.NO);
+        alert.setTitle("Premiere partie");
+        return alert;
+    }
+
     public Alert popUpPartieEnCours(){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"La partie est en cours!\n Etes-vous sûr de l'interrompre ?", ButtonType.YES, ButtonType.NO);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"La partie est en cours!\nEtes-vous sûr de l'interrompre ?", ButtonType.YES, ButtonType.NO);
         alert.setTitle("Attention");
         return alert;
     }
