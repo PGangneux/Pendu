@@ -328,7 +328,6 @@ public class Pendu extends Application {
             
             this.erreursRestantes = this.modelePendu.getNbErreursRestants();
             System.out.println("local2 "+this.erreursRestantes);
-            String cheminImg = "file:img/pendu" + this.numImg + ".png";
             this.dessin.setImage(this.lesImages.get(this.numImg));
             center.getChildren().set(1,this.dessin);
             this.numImg +=frequnce;
