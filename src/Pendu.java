@@ -86,6 +86,7 @@ public class Pendu extends Application {
      */ 
     private Button bJouer;
 
+
     /*numéro de l'image */
     private int numImg;
 
@@ -94,7 +95,12 @@ public class Pendu extends Application {
 
     private int erreursRestantes;
 
+    private Color couleurTop;
+    private BorderPane banniere;
+
+
     public ImageView imgHome;
+    
 
 
     /**
@@ -110,7 +116,7 @@ public class Pendu extends Application {
         this.lesImages = new ArrayList<Image>();
         this.chargerImages("./img");
         
-
+        this.couleurTop = Color.LAVENDER;
         // A terminer d'implementer
 
         // Les boutons 
@@ -126,6 +132,8 @@ public class Pendu extends Application {
         ControleurParametre controlParam = new ControleurParametre(this, this.modelePendu);
         ControleurLancerPartie controlLancer = new ControleurLancerPartie(this.modelePendu, this);
 
+        this.panelCentral = new BorderPane();
+        this.banniere = new BorderPane();
         this.boutonMaison = new Button();
         this.boutonMaison.setGraphic(viewHome);
         this.boutonMaison.setOnAction(controlAccueil);
@@ -140,7 +148,7 @@ public class Pendu extends Application {
 
         this.bJouer = new Button("Lancer une partie");
         this.bJouer.setOnAction(controlLancer);
-        
+        this.chrono = new Chronometre();
         this.niveaux = Arrays.asList("Facile", "Médium", "Difficile", "Expert");
 
         
@@ -153,7 +161,7 @@ public class Pendu extends Application {
      */
     private Scene laScene(){
         BorderPane fenetre = new BorderPane();
-        fenetre.setTop(this.titre());
+        fenetre.setTop(this.banniere);
         fenetre.setCenter(this.panelCentral);
         return new Scene(fenetre, 800, 1000);
     }
@@ -161,10 +169,10 @@ public class Pendu extends Application {
     /**
      * @return le panel contenant le titre du jeu
      */
-    private Pane titre(){
+    private void titre(){
         
         //Partie haute de l'accueil
-        BorderPane banniere = new BorderPane();
+        
         Label  titre = new Label("Jeu du Pendu");
         titre.setFont(Font.font("Arial", FontWeight.BOLD, 28));
         
@@ -177,13 +185,13 @@ public class Pendu extends Application {
         lesBoutons.getChildren().addAll(this.boutonMaison, this.boutonParametres, this.boutonInfo);
         lesBoutons.setSpacing(5);
 
-        banniere.setPadding(new Insets(15));
-        banniere.setLeft(titre);
-        banniere.setRight(lesBoutons);
+        this.banniere.setPadding(new Insets(15));
+        this.banniere.setLeft(titre);
+        this.banniere.setRight(lesBoutons);
         //Le background
-        banniere.setBackground(new Background(new BackgroundFill(Color.LAVENDER, CornerRadii.EMPTY, Insets.EMPTY)));
+        this.banniere.setBackground(new Background(new BackgroundFill(this.couleurTop, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        return banniere;
+  
     }
 
     // /**
@@ -208,14 +216,14 @@ public class Pendu extends Application {
     /**
      * @return la fenêtre d'accueil sur laquelle on peut choisir les paramètres de jeu
      */
-    private BorderPane fenetreAccueil(){
-        BorderPane accueil = new BorderPane();
-        
-   
+    private void fenetreAccueil(){
 
         VBox lesDifficultes = new VBox();
         VBox positionnement = new VBox();
+        VBox droite = new VBox();
 
+        this.panelCentral.setTop(new VBox());
+        this.panelCentral.setRight(droite);
         ToggleGroup groupe = new ToggleGroup();
         boolean difficulteParDefaut = false;
         for (String unNiveau : this.niveaux){
@@ -226,19 +234,24 @@ public class Pendu extends Application {
                 r.setSelected(true);
                 difficulteParDefaut = true;
             }
-
         
         }
-
         lesDifficultes.setSpacing(5);
         TitledPane difficulte = new TitledPane("Niveau de difficulté", lesDifficultes);
         
         positionnement.getChildren().addAll(this.bJouer, difficulte);
         positionnement.setSpacing(10);
-        accueil.setCenter(positionnement);
-        accueil.setPadding(new Insets(15));
+        this.panelCentral.setCenter(positionnement);
+        this.panelCentral.setPadding(new Insets(15));
+    }
 
-        return accueil;
+    private void fenetreParam(){
+        ColorPicker pc=new ColorPicker(Color.web(this.couleurTop.toString()));
+        pc.setOnAction(new ControleurCouleur(this, pc));
+        panelCentral.setTop(pc);
+        panelCentral.setCenter(new VBox());  
+        panelCentral.setRight(new VBox());  
+        
     }
 
     /**
@@ -254,8 +267,9 @@ public class Pendu extends Application {
     }
 
     public void modeAccueil(){
-        this.panelCentral = fenetreAccueil();
-        
+        this.fenetreAccueil();
+        activerBoutonParametre();
+        desacBoutonAccueil(); 
     }
     
     public void modeJeu(){
@@ -283,30 +297,39 @@ public class Pendu extends Application {
         
         VBox right = new VBox();
         Label niveau = new Label("niveau " + this.leNiveau);
-        TilePane tilePaneTimer = new TilePane();
+        TitledPane chrono = new TitledPane("Chronomètres", this.chrono);
+        chrono.setCollapsible(false);
         this.bJouer = new Button("Nouveau mot");
         ControleurLancerPartie controlLancer = new ControleurLancerPartie(this.modelePendu, this);
         this.bJouer.setOnAction(controlLancer);
-        right.getChildren().addAll(niveau, tilePaneTimer,this.bJouer);
+        right.getChildren().addAll(niveau, chrono,this.bJouer);
+        right.setSpacing(10);
         this.panelCentral.setRight(right);
-
+        
     }
     
     public void modeParametres(){
-        // A implémenter
+        this.fenetreParam();
+        desacBoutonParametre();
+        activerBoutonAccueil();  
     }
 
     /** lance une partie */
     public void lancePartie(){
         this.modeJeu();
+
         /*numéro de l'image */
         this.numImg=0;
         /*fréquence changement img */
         this.frequnce = (double) this.modelePendu.getNbErreursMax()/11;
         this.frequnce = (double) 1/frequnce;
         this.frequnce = (int) Math.round(frequnce);
-
         this.erreursRestantes = this.modelePendu.getNbErreursRestants();
+      
+        desacBoutonParametre();
+        activerBoutonAccueil(); 
+        this.chrono.start();
+
     }
 
     /**
@@ -333,9 +356,6 @@ public class Pendu extends Application {
             
         }
 
-        
-        
-        
     }
 
     /**
@@ -344,18 +364,19 @@ public class Pendu extends Application {
      */
     public Chronometre getChrono(){
         // A implémenter
-        return null; // A enlever
+        return this.chrono;
     }
 
+
     public Alert popUpPartieEnCours(){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"La partie est en cours!\n Etes-vous sûr de l'interrompre ?", ButtonType.YES, ButtonType.NO);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"La partie est en cours!\nEtes-vous sûr de l'interrompre ?", ButtonType.YES, ButtonType.NO);
         alert.setTitle("Attention");
         return alert;
     }
         
     public Alert popUpReglesDuJeu(){
-        // A implementer
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,"Le but du jeu est simple : deviner toute les lettres qui doivent composer un mot.\nÉventuellement avec un nombre limité de tentatives et des thèmes fixés à l'avance.\n A chaque fois que le joueur devine une lettre, celle-ci est affichée.\n Dans le cas contraire, le dessin d'un pendu se met à apparaître…");
         return alert;
     }
     
@@ -382,8 +403,33 @@ public class Pendu extends Application {
     public void start(Stage stage) {
         stage.setTitle("IUTEAM'S - La plateforme de jeux de l'IUTO");
         this.modeAccueil();
+        this.titre();
         stage.setScene(this.laScene());
         stage.show();
+    }
+    
+    public void setCouleur(Color couleur){
+        this.couleurTop = couleur;
+    }
+
+    public BorderPane getBanniere(){
+        return this.banniere;
+    }
+
+    public void desacBoutonAccueil() {
+        this.boutonMaison.setDisable(true);
+    }
+
+    public void activerBoutonAccueil() {
+        this.boutonMaison.setDisable(false);
+    }
+
+    public void activerBoutonParametre() {
+        this.boutonParametres.setDisable(false);
+    }
+
+    public void desacBoutonParametre() {
+        this.boutonParametres.setDisable(true);
     }
 
     /**
@@ -392,5 +438,6 @@ public class Pendu extends Application {
      */
     public static void main(String[] args) {
         launch(args);
-    }    
+    }
+
 }
