@@ -85,7 +85,11 @@ public class Pendu extends Application {
      * le bouton qui permet de (lancer ou relancer une partie
      */ 
     private Button bJouer;
+    private Color couleurTop;
+    private BorderPane banniere;
+
     public ImageView imgHome;
+    
 
     /**
      * initialise les attributs (créer le modèle, charge les images, crée le chrono ...)
@@ -96,7 +100,7 @@ public class Pendu extends Application {
         this.lesImages = new ArrayList<Image>();
         this.chargerImages("./img");
         
-
+        this.couleurTop = Color.LAVENDER;
         // A terminer d'implementer
 
         // Les boutons 
@@ -113,7 +117,7 @@ public class Pendu extends Application {
         ControleurLancerPartie controlLancer = new ControleurLancerPartie(this.modelePendu, this);
 
         this.panelCentral = new BorderPane();
-
+        this.banniere = new BorderPane();
         this.boutonMaison = new Button();
         this.boutonMaison.setGraphic(viewHome);
         this.boutonMaison.setOnAction(controlAccueil);
@@ -137,7 +141,7 @@ public class Pendu extends Application {
      */
     private Scene laScene(){
         BorderPane fenetre = new BorderPane();
-        fenetre.setTop(this.titre());
+        fenetre.setTop(this.banniere);
         fenetre.setCenter(this.panelCentral);
         return new Scene(fenetre, 800, 1000);
     }
@@ -145,10 +149,10 @@ public class Pendu extends Application {
     /**
      * @return le panel contenant le titre du jeu
      */
-    private Pane titre(){
+    private void titre(){
         
         //Partie haute de l'accueil
-        BorderPane banniere = new BorderPane();
+        
         Label  titre = new Label("Jeu du Pendu");
         titre.setFont(Font.font("Arial", FontWeight.BOLD, 28));
         
@@ -161,13 +165,13 @@ public class Pendu extends Application {
         lesBoutons.getChildren().addAll(this.boutonMaison, this.boutonParametres, this.boutonInfo);
         lesBoutons.setSpacing(5);
 
-        banniere.setPadding(new Insets(15));
-        banniere.setLeft(titre);
-        banniere.setRight(lesBoutons);
+        this.banniere.setPadding(new Insets(15));
+        this.banniere.setLeft(titre);
+        this.banniere.setRight(lesBoutons);
         //Le background
-        banniere.setBackground(new Background(new BackgroundFill(Color.LAVENDER, CornerRadii.EMPTY, Insets.EMPTY)));
+        this.banniere.setBackground(new Background(new BackgroundFill(this.couleurTop, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        return banniere;
+  
     }
 
     // /**
@@ -198,6 +202,7 @@ public class Pendu extends Application {
         VBox positionnement = new VBox();
         VBox droite = new VBox();
 
+        this.panelCentral.setTop(new VBox());
         this.panelCentral.setRight(droite);
         ToggleGroup groupe = new ToggleGroup();
         boolean difficulteParDefaut = false;
@@ -221,8 +226,11 @@ public class Pendu extends Application {
     }
 
     private void fenetreParam(){
-        this.panelCentral.setCenter(new BorderPane()); 
-
+        ColorPicker pc=new ColorPicker(Color.web(this.couleurTop.toString()));
+        pc.setOnAction(new ControleurCouleur(this, pc));
+        panelCentral.setTop(pc);
+        panelCentral.setCenter(new VBox());  
+        panelCentral.setRight(new VBox());  
     }
 
     /**
@@ -329,8 +337,17 @@ public class Pendu extends Application {
     public void start(Stage stage) {
         stage.setTitle("IUTEAM'S - La plateforme de jeux de l'IUTO");
         this.modeAccueil();
+        this.titre();
         stage.setScene(this.laScene());
         stage.show();
+    }
+    
+    public void setCouleur(Color couleur){
+        this.couleurTop = couleur;
+    }
+
+    public BorderPane getBanniere(){
+        return this.banniere;
     }
 
     /**
@@ -339,5 +356,6 @@ public class Pendu extends Application {
      */
     public static void main(String[] args) {
         launch(args);
-    }    
+    }
+
 }
