@@ -136,7 +136,7 @@ public class Pendu extends Application {
 
         this.bJouer = new Button("Lancer une partie");
         this.bJouer.setOnAction(controlLancer);
-        
+        this.chrono = new Chronometre();
         this.niveaux = Arrays.asList("Facile", "Médium", "Difficile", "Expert");
     }
 
@@ -282,13 +282,15 @@ public class Pendu extends Application {
         
         VBox right = new VBox();
         Label niveau = new Label("niveau " + this.leNiveau);
-        TilePane tilePaneTimer = new TilePane();
+        TitledPane chrono = new TitledPane("Chronomètres", this.chrono);
+        chrono.setCollapsible(false);
         this.bJouer = new Button("Nouveau mot");
         ControleurLancerPartie controlLancer = new ControleurLancerPartie(this.modelePendu, this);
         this.bJouer.setOnAction(controlLancer);
-        right.getChildren().addAll(niveau, tilePaneTimer,this.bJouer);
+        right.getChildren().addAll(niveau, chrono,this.bJouer);
+        right.setSpacing(10);
         this.panelCentral.setRight(right);
-
+        
     }
     
     public void modeParametres(){
@@ -302,6 +304,7 @@ public class Pendu extends Application {
         this.modeJeu();
         desacBoutonParametre();
         activerBoutonAccueil(); 
+        this.chrono.start();
     }
 
     /**
@@ -323,14 +326,9 @@ public class Pendu extends Application {
      */
     public Chronometre getChrono(){
         // A implémenter
-        return null; // A enlever
+        return this.chrono;
     }
 
-    public Alert popUpPremierePartie(){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Souhaitez vous jouer ?", ButtonType.YES, ButtonType.NO);
-        alert.setTitle("Premiere partie");
-        return alert;
-    }
 
     public Alert popUpPartieEnCours(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"La partie est en cours!\nEtes-vous sûr de l'interrompre ?", ButtonType.YES, ButtonType.NO);
