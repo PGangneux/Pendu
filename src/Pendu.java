@@ -320,18 +320,16 @@ public class Pendu extends Application {
             this.popUpMessageGagne().showAndWait();
         }
         if (this.modelePendu.perdu()){
-            this.dessin = new ImageView(new Image("file:img/pendu10.png"));
+            this.dessin.setImage(this.lesImages.get(10));
             center.getChildren().set(1,this.dessin);
             this.popUpMessagePerdu().showAndWait();
         }
-        System.out.println("local "+this.erreursRestantes);
-        System.out.println(this.modelePendu.getNbErreursRestants());
         if(this.erreursRestantes != this.modelePendu.getNbErreursRestants()){
             
             this.erreursRestantes = this.modelePendu.getNbErreursRestants();
             System.out.println("local2 "+this.erreursRestantes);
             String cheminImg = "file:img/pendu" + this.numImg + ".png";
-            this.dessin = new ImageView(new Image(cheminImg));
+            this.dessin.setImage(this.lesImages.get(this.numImg));
             center.getChildren().set(1,this.dessin);
             this.numImg +=frequnce;
             
