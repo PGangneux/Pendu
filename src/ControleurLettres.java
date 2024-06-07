@@ -39,6 +39,7 @@ public class ControleurLettres implements EventHandler<ActionEvent> {
         Button b = (Button) actionEvent.getSource();
 
         this.modelePendu.essaiLettre(b.getText().charAt(0));
+        b.setDisable(true);
         
         this.vuePendu.majAffichage();
         

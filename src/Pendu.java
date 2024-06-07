@@ -295,6 +295,9 @@ public class Pendu extends Application {
         this.motCrypte = new Text(this.modelePendu.getMotCrypte());
         VBox center =(VBox) this.panelCentral.getCenter();
         center.getChildren().set(0, this.motCrypte);
+        if(this.motCrypte.equals(this.motCrypte.getText())){
+            
+        }
         
         
         
