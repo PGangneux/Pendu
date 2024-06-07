@@ -85,7 +85,17 @@ public class Pendu extends Application {
      * le bouton qui permet de (lancer ou relancer une partie
      */ 
     private Button bJouer;
+
+    /*numéro de l'image */
+    private int numImg;
+
+    /*fréquence changement img */
+    private double frequnce;
+
+    private int erreursRestantes;
+
     public ImageView imgHome;
+
 
     /**
      * initialise les attributs (créer le modèle, charge les images, crée le chrono ...)
@@ -132,6 +142,8 @@ public class Pendu extends Application {
         this.bJouer.setOnAction(controlLancer);
         
         this.niveaux = Arrays.asList("Facile", "Médium", "Difficile", "Expert");
+
+        
     }
 
     
@@ -250,6 +262,7 @@ public class Pendu extends Application {
         VBox center = new VBox();
         this.motCrypte = new Text(this.modelePendu.getMotCrypte());
         this.dessin = new ImageView(new Image("file:img/pendu0.png"));
+        this.numImg += 1;
         this.pg = new ProgressBar();
         TilePane boutontTilePane = new TilePane();
         
@@ -286,6 +299,14 @@ public class Pendu extends Application {
     /** lance une partie */
     public void lancePartie(){
         this.modeJeu();
+        /*numéro de l'image */
+        this.numImg=0;
+        /*fréquence changement img */
+        this.frequnce = (double) this.modelePendu.getNbErreursMax()/11;
+        this.frequnce = (double) 1/frequnce;
+        this.frequnce = (int) Math.round(frequnce);
+
+        this.erreursRestantes = this.modelePendu.getNbErreursRestants();
     }
 
     /**
@@ -295,9 +316,27 @@ public class Pendu extends Application {
         this.motCrypte = new Text(this.modelePendu.getMotCrypte());
         VBox center =(VBox) this.panelCentral.getCenter();
         center.getChildren().set(0, this.motCrypte);
-        if(this.motCrypte.equals(this.motCrypte.getText())){
+        if(this.modelePendu.gagne()){
+            this.popUpMessageGagne().showAndWait();
+        }
+        if (this.modelePendu.perdu()){
+            this.dessin = new ImageView(new Image("file:img/pendu10.png"));
+            center.getChildren().set(1,this.dessin);
+            this.popUpMessagePerdu().showAndWait();
+        }
+        System.out.println("local "+this.erreursRestantes);
+        System.out.println(this.modelePendu.getNbErreursRestants());
+        if(this.erreursRestantes != this.modelePendu.getNbErreursRestants()){
+            
+            this.erreursRestantes = this.modelePendu.getNbErreursRestants();
+            System.out.println("local2 "+this.erreursRestantes);
+            String cheminImg = "file:img/pendu" + this.numImg + ".png";
+            this.dessin = new ImageView(new Image(cheminImg));
+            center.getChildren().set(1,this.dessin);
+            this.numImg +=frequnce;
             
         }
+
         
         
         
@@ -326,13 +365,16 @@ public class Pendu extends Application {
     
     public Alert popUpMessageGagne(){
         // A implementer
+        
         Alert alert = new Alert(Alert.AlertType.INFORMATION);        
+        alert.setContentText("Bravo vous avez gagné ! ");
         return alert;
     }
     
     public Alert popUpMessagePerdu(){
         // A implementer    
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Dommage vous avez perdue");
         return alert;
     }
 
