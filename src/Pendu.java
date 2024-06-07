@@ -237,6 +237,7 @@ public class Pendu extends Application {
         panelCentral.setTop(pc);
         panelCentral.setCenter(new VBox());  
         panelCentral.setRight(new VBox());  
+        
     }
 
     /**
@@ -253,6 +254,8 @@ public class Pendu extends Application {
 
     public void modeAccueil(){
         this.fenetreAccueil();
+        activerBoutonParametre();
+        desacBoutonAccueil(); 
     }
     
     public void modeJeu(){
@@ -289,12 +292,16 @@ public class Pendu extends Application {
     }
     
     public void modeParametres(){
-        this.fenetreParam();  
+        this.fenetreParam();
+        desacBoutonParametre();
+        activerBoutonAccueil();  
     }
 
     /** lance une partie */
     public void lancePartie(){
         this.modeJeu();
+        desacBoutonParametre();
+        activerBoutonAccueil(); 
     }
 
     /**
@@ -307,9 +314,7 @@ public class Pendu extends Application {
         if(this.motCrypte.equals(this.motCrypte.getText())){
             
         }
-        
-        
-        
+         
     }
 
     /**
@@ -364,6 +369,22 @@ public class Pendu extends Application {
 
     public BorderPane getBanniere(){
         return this.banniere;
+    }
+
+    public void desacBoutonAccueil() {
+        this.boutonMaison.setDisable(true);
+    }
+
+    public void activerBoutonAccueil() {
+        this.boutonMaison.setDisable(false);
+    }
+
+    public void activerBoutonParametre() {
+        this.boutonParametres.setDisable(false);
+    }
+
+    public void desacBoutonParametre() {
+        this.boutonParametres.setDisable(true);
     }
 
     /**
