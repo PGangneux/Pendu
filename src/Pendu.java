@@ -89,18 +89,31 @@ public class Pendu extends Application {
     private Button bJouer;
 
 
-    /*numéro de l'image */
+    /*
+     * numéro de l'image
+     */
     private int numImg;
 
-
+    /*
+     * nombre d'erreur restante avant la fin de la partie
+     */
     private int erreursRestantes;
-
+     /*
+     * nombre de lettre trouvé
+     */
     private int nbLettresTrouver;
-
+     /*
+     * couleur de la banière
+     */
     private Color couleurTop;
+     /*
+     * Le Panel du haut 
+     */
     private BorderPane banniere;
 
-
+    /*
+     * l'image du boutton acceuil
+     */
     public ImageView imgHome;
     
 
@@ -271,13 +284,18 @@ public class Pendu extends Application {
             this.lesImages.add(new Image(file.toURI().toString()));
         }
     }
-
+    /**
+     * permet de passer sur la fenetre de l'accueil 
+     */
     public void modeAccueil(){
         this.fenetreAccueil();
         activerBoutonParametre();
         desacBoutonAccueil(); 
     }
     
+    /**
+     * permet de passer sur la fenetre du jeu
+     */
     public void modeJeu(){
         VBox center = new VBox();
         this.motCrypte = new Text(this.modelePendu.getMotCrypte());
@@ -322,7 +340,9 @@ public class Pendu extends Application {
         
         
     }
-    
+    /**
+     * permet de passer sur la fenetre des paramètres
+     */
     public void modeParametres(){
         this.fenetreParam();
         desacBoutonParametre();
@@ -380,7 +400,7 @@ public class Pendu extends Application {
             this.nbLettresTrouver = this.modelePendu.getMotATrouve().length() - this.modelePendu.getNbLettresRestantes();
             this.pg.setProgress((double) this.nbLettresTrouver / this.modelePendu.getMotATrouve().length());
         }
-        //System.out.println(this.modelePendu.getMotATrouve());
+        
 
     }
 
@@ -432,27 +452,40 @@ public class Pendu extends Application {
         stage.setScene(this.laScene());
         stage.show();
     }
+    /**
+     * permet de changer la couleur de la banière
+     */
     
     public void setCouleur(Color couleur){
         this.couleurTop = couleur;
     }
-
+    /**
+     * @return la banière
+     */
     public BorderPane getBanniere(){
         return this.banniere;
     }
-
+    /**
+     * permet de desactiver le boutton paramètre
+     */
     public void desacBoutonAccueil() {
         this.boutonMaison.setDisable(true);
     }
-
+    /**
+     * permet d'activer le boutton accueil
+     */
     public void activerBoutonAccueil() {
         this.boutonMaison.setDisable(false);
     }
-
+    /**
+     * permet d'activer le boutton paramètre
+     */
     public void activerBoutonParametre() {
         this.boutonParametres.setDisable(false);
     }
-
+    /**
+     * permet de desactiver le boutton paramètre
+     */
     public void desacBoutonParametre() {
         this.boutonParametres.setDisable(true);
     }
