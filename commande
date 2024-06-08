@@ -1,7 +1,7 @@
 Pour compiler :
 javac -d bin --module-path /usr/share/openjfx/lib/ --add-modules javafx.controls ./src/*.java
 Pour executer :
-java -cp bin:img --module-path /usr/share/openjfx/lib/ --add-modules javafx.controls AppliConverter
+java -cp bin:img --module-path /usr/share/openjfx/lib/ --add-modules javafx.controls Pendu
 
 Pour g�n�rer la javadoc d'une application JavaFX, il faut �galement ajouter les deux options :
 javadoc -d doc --module-path /usr/share/openjfx/lib/ --add-modules javafx.controls ./src/*.java

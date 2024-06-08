@@ -127,7 +127,7 @@ public class Pendu extends Application {
      
     @Override
     public void init() {
-        this.modelePendu = new MotMystere("/usr/share/dict/french", 3, 10, MotMystere.FACILE, 10);
+        this.modelePendu = new MotMystere("./dico", 3, 10, MotMystere.FACILE, 10);
         this.lesImages = new ArrayList<Image>();
         this.chargerImages("./img");
         
@@ -356,7 +356,7 @@ public class Pendu extends Application {
         int niveau = this.modelePendu.getNiveau();
         this.leNiveau.setText(this.niveaux.get(niveau));
 
-        this.modelePendu = new MotMystere("/usr/share/dict/french", 3, 10, niveau, 10);
+        this.modelePendu = new MotMystere("./dico", 3, 10, niveau, 10);
         /*numéro de l'image */
         this.numImg=0;
         this.erreursRestantes = this.modelePendu.getNbErreursRestants();
